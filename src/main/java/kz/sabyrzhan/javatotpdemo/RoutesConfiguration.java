@@ -8,12 +8,7 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Component
-public class RoutesConfiguration {
-    private final FunctionsConfiguration functions;
-    public RoutesConfiguration(FunctionsConfiguration functions) {
-        this.functions = functions;
-    }
-
+public record RoutesConfiguration(FunctionsConfiguration functions) {
     @Bean
     public RouterFunction<ServerResponse> routers() {
         return RouterFunctions

@@ -12,13 +12,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 @Component
-public class FunctionsConfiguration {
-    private final CodeVerifier totpVerifier;
-
-    public FunctionsConfiguration(CodeVerifier totpVerifier) {
-        this.totpVerifier = totpVerifier;
-    }
-
+public record FunctionsConfiguration(CodeVerifier totpVerifier) {
     public Mono<ServerResponse> totpLogin(ServerRequest request) {
         var totpSecret = generateOtpSecret();
         var totpUrl = createOtpUrl(totpSecret);
@@ -29,7 +23,7 @@ public class FunctionsConfiguration {
     public Mono<ServerResponse> validateTotp(ServerRequest request) {
         return Mono
                 .defer(() -> request.bodyToMono(ValidateModel.class))
-                .flatMap(validateModel ->  {
+                .flatMap(validateModel -> {
                     if (!totpVerifier.isValidCode(validateModel.otpSecret(), validateModel.otpCode)) {
                         return ServerResponse.status(HttpStatus.FORBIDDEN).body(Mono.error(new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid code")), Map.class);
                     }
@@ -47,6 +41,9 @@ public class FunctionsConfiguration {
         return String.format("otpauth://totp/%s?secret=%s&issuer=%s", appName, otpSecret, appName);
     }
 
-    public record LoginModel(String otpUrl, String otpSecret) {}
-    public record ValidateModel(String otpSecret, String otpCode) {}
+    public record LoginModel(String otpUrl, String otpSecret) {
+    }
+
+    public record ValidateModel(String otpSecret, String otpCode) {
+    }
 }
