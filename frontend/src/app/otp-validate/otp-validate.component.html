@@ -1,0 +1,6 @@
+<div>
+  <label>6 digit code</label>
+  <input type="text" [(ngModel)]="digitCode"  />
+  <button (click)="validateOtp()">ValidateOtp</button>
+  <div *ngIf="validationStatus != ''">{{ validationStatus }}</div>
+</div>

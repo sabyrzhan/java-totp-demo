@@ -12,7 +12,7 @@ public record RoutesConfiguration(FunctionsConfiguration functions) {
     @Bean
     public RouterFunction<ServerResponse> routers() {
         return RouterFunctions
-                .route(RequestPredicates.GET("/api/totp-login"), functions::totpLogin)
+                .route(RequestPredicates.GET("/api/totp-code"), functions::totpLogin)
                 .andRoute(RequestPredicates.POST("/api/totp-validate"), functions::validateTotp);
     }
 }

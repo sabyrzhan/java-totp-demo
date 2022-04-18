@@ -1,5 +1,5 @@
 ### Generate OTP
-GET http://localhost:8080/api/totp-login
+GET http://localhost:8080/api/totp-code
 Content-Type: application/json
 
 ### Validate OTP
