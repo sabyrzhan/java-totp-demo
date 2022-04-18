@@ -7,6 +7,5 @@ POST http://localhost:8080/api/totp-validate
 Content-Type: application/json
 
 {
-  "otpSecret": "KMKR7FVLKQGOVECXKBOYZOEFUJ5VTLZQ",
   "otpCode": "123"
 }
